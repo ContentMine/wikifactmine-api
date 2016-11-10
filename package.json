@@ -1,0 +1,24 @@
+{
+  "name": "wikifactmine-api",
+  "version": "0.0.1",
+  "description": "An API to return facts for WikiFaceMine",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContentMine/wikifactmine-api.git"
+  },
+  "author": "Thomas Arrow",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ContentMine/wikifactmine-api/issues"
+  },
+  "homepage": "https://github.com/ContentMine/wikifactmine-api#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "fs-promise": "^0.5.0",
+    "lodash": "^4.16.6"
+  }
+}
