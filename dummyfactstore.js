@@ -38,7 +38,7 @@ dummyFactStore.prototype.getByDate = function(date) {
   return new Promise(function(resolve, reject) {
     //console.log('reading from file')
     fsp.readFile('sample.json', {encoding:'utf8'})
-    .then(line => { return convertESDump2OutputForm(line, date) })
+    .then(function(line) { return convertESDump2OutputForm(line, date) })
     .then(resolve)
   });
 }

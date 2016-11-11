@@ -9,12 +9,12 @@ var swagger = require('swagger-node-express').createNew(subpath);
 
 
 factStore = new factstore()
-router.get('/date/:date', (req, res) => {
+router.get('/date/:date', function(req, res) {
   factStore.getByDate(req.params.date)
-  .then((facts) => {
+  .then(function(facts) {
     res.json(facts)
   })
-  .catch((err) => {
+  .catch(function(err) {
     res.send(err)
   })
 })
