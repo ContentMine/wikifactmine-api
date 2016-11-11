@@ -20,7 +20,7 @@ router.get('/date/:date', (req, res) => {
 })
 
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 app.use(express.static('dist'));
 //app.use("/v1", subpath);
 app.use('/api', router)
