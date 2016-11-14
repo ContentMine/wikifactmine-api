@@ -3,9 +3,9 @@ var app = express()
 var router = express.Router()
 var factstore = require('./dummyfactstore')
 var port = process.env.PORT || 8080;
-var bodyParser = require( 'body-parser' );
-var subpath = express();
-var swagger = require('swagger-node-express').createNew(subpath);
+var bodyParser = require( 'body-parser' )
+var modRewrite = require('connect-modrewrite')
+
 
 
 factStore = new factstore()
@@ -19,13 +19,14 @@ router.get('/date/:date', function(req, res) {
   })
 })
 
-
-app.use(bodyParser.json());
-app.use(express.static('dist'));
-//app.use("/v1", subpath);
+app.use(modRewrite([
+  '^/wikifactmine-api(.*) /$1'
+]))
+app.use(bodyParser.json())
+app.use(express.static('dist'))
 app.use('/api', router)
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/dist/index.html');
+  res.sendFile(__dirname + '/dist/index.html')
 });
 
 
