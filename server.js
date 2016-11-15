@@ -19,16 +19,20 @@ router.get('/date/:date', function(req, res) {
   })
 })
 
-app.use(modRewrite([
-  '^/wikifactmine-api(.*) /$1'
-]))
+// app.use(modRewrite([
+//   '^/wikifactmine-api(.*) /$1'
+// ]))
 app.use(bodyParser.json())
-app.use(express.static('dist'))
 app.use('/api', router)
 app.use('/wikifactmine-api/api', router)
+app.get('/wikifactmine-api', function (req, res) {
+  res.sendFile(__dirname + '/dist/index.html')
+});
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/dist/index.html')
 });
+app.use(express.static('dist'))
+
 
 
 app.listen(port)
