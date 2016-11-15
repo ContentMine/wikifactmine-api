@@ -25,6 +25,7 @@ app.use(modRewrite([
 app.use(bodyParser.json())
 app.use(express.static('dist'))
 app.use('/api', router)
+app.use('/wikifactmine-api/api', router)
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/dist/index.html')
 });
