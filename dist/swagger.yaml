@@ -30,7 +30,7 @@ paths:
           in: path
           description: The ingestion load date facts should be returned from
           required: true
-          type: date
+          type: string
       responses:
         "200":
           description: Success
