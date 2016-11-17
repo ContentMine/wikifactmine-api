@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/dist/index.html')
 });
 app.use(express.static('dist'))
-
+app.use('/wikifactmine-api/', express.static('dist'))
 
 
 app.listen(port)
