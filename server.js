@@ -23,6 +23,14 @@ router.get('/date/:date', function(req, res) {
 //   '^/wikifactmine-api(.*) /$1'
 // ]))
 app.use(bodyParser.json())
+
+//enable cors
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next();
+})
+
 app.use('/api', router)
 app.use('/wikifactmine-api/api', router)
 app.get('/wikifactmine-api', function (req, res) {
