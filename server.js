@@ -1,7 +1,7 @@
 var express = require('express')
 var app = express()
 var router = express.Router()
-var factstore = require('./dummyfactstore')
+var factstore = require('./elasticfactstore')
 var port = process.env.PORT || 8080;
 var bodyParser = require( 'body-parser' )
 var modRewrite = require('connect-modrewrite')
