@@ -20,6 +20,7 @@ ESFactStore.prototype.getByDate = function (date) {
     console.log(date)
     getESClient().search({
       index: 'facts',
+      method: 'GET',
       body: {
         query: {
           bool: {
