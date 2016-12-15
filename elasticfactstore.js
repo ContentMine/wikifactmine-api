@@ -15,6 +15,18 @@ var getESClient = function () {
   return client
 }
 
+var convertFactsToOutputForm = function (facts) {
+  return _.map(facts.hits.hits, convertESLine2OutputForm)
+}
+
+var convertESLine2OutputForm = function (line) {
+  if (line) {
+    var lineOut = line._source
+    return lineOut
+  }
+  return null
+}
+
 ESFactStore.prototype.getByDate = function (date) {
   return new Promise(function(resolve, reject) {
     //console.log('reading from file')
@@ -37,8 +49,8 @@ ESFactStore.prototype.getByDate = function (date) {
         }
       }
     })
-    .then(function (facts) {
-      resolve(facts.hits.hits)
+    .then(function(facts) {
+      resolve(convertFactsToOutputForm(facts))
     })
     .catch(console.log)
   })
