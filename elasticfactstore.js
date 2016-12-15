@@ -22,13 +22,15 @@ ESFactStore.prototype.getByDate = function (date) {
     getESClient().search({
       index: config.elasticFactIndex,
       method: "GET",
-      query: {
-        bool: {
-          must: {
-            range: {
-              ingestionDate: {
-                gte: date+'||/d',
-                lt: date+'||+1d/d'
+        body: {
+        query: {
+          bool: {
+            must: {
+              range: {
+                ingestionDate: {
+                  gte: date+'||/d',
+                  lt: date+'||+1d/d'
+                }
               }
             }
           }
