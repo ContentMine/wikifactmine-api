@@ -9,7 +9,7 @@ var ESFactStore = function () {
 
 var getESClient = function () {
   var client = new elasticsearch.Client({
-    host: config.elasticHost,
+    host: config.elasticServer,
     log: 'trace'
   })
   return client
