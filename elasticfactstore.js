@@ -7,8 +7,9 @@ var ESFactStore = function () {
 }
 
 var getESClient = function () {
-  var client = new elasticsearch.Client({
-    host: config.elasticServer
+    var client = new elasticsearch.Client({
+	host: config.elasticServer,
+	apiVersion: '2.4'
   })
   return client
 }
@@ -25,30 +26,18 @@ var convertESLine2OutputForm = function (line) {
   return null
 }
 
-ESFactStore.prototype.getByDate = function (date) {
+ESFactStore.prototype.getByDate = function (date, page) {
   var allResults = []
-
-  var getRemainingResults = function (results) {
-    allResults = _.concat(allResults, results.hits.hits)
-    return new Promise(function (resolve, reject) {
-      if (results.hits.total > allResults.length) {
-        getESClient().scroll({
-          method: 'GET',
-          scrollId: results._scroll_id,
-          scroll: '30s'
-        })
-        .then((newResults) => { resolve(getRemainingResults(newResults)) })
-      } else {
-        resolve(allResults)
-      }
-    })
-  }
+  var resultsPerPage = 100
+  var ESFrom = resultsPerPage * page
 
   return new Promise(function (resolve, reject) {
     getESClient().search({
       index: config.elasticFactIndex,
       method: 'GET',
       body: {
+	from: ESFrom,
+	size: resultsPerPage,
         query: {
           bool: {
             must: {
@@ -61,13 +50,11 @@ ESFactStore.prototype.getByDate = function (date) {
             }
           }
         }
-      },
-      scroll: '30s'
+      }
     })
-    .then(getRemainingResults)
-    .then(function (facts) {
-      console.log(facts.length)
-      resolve(convertFactsToOutputForm(facts))
+      .then(function (results) {
+	var facts = results.hits.hits
+	resolve(convertFactsToOutputForm(facts))
     })
     .catch(console.log)
   })
