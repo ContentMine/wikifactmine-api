@@ -31,6 +31,9 @@ paths:
           description: The ingestion load date facts should be returned from
           required: true
           type: string
+          format: date
+          validate:
+            enabled: true
       responses:
         "200":
           description: Success

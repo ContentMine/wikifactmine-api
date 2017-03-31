@@ -18,6 +18,11 @@ router.get('/date/:date', function (req, res) {
   })
 })
 
+function errorHandler (err, req, res, next) {
+  res.status(err.status)
+  res.json({ error: err.message })
+}
+
 middleware('dist/swagger.yaml', app, function (err, middleware) {
   if (err) throw err
 
@@ -45,5 +50,7 @@ middleware('dist/swagger.yaml', app, function (err, middleware) {
   app.use(express.static('dist'))
   app.use('/wikifactmine-api/', express.static('dist'))
 
+  app.use(errorHandler)
+  
   app.listen(port)
 })
