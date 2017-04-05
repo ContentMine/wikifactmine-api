@@ -51,6 +51,6 @@ middleware('dist/swagger.yaml', app, function (err, middleware) {
   app.use('/wikifactmine-api/', express.static('dist'))
 
   app.use(errorHandler)
-  
+
   app.listen(port)
 })

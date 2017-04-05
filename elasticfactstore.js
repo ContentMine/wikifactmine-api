@@ -7,9 +7,9 @@ var ESFactStore = function () {
 }
 
 var getESClient = function () {
-    var client = new elasticsearch.Client({
-	host: config.elasticServer,
-	apiVersion: '2.4'
+  var client = new elasticsearch.Client({
+    host: config.elasticServer,
+    apiVersion: '2.4'
   })
   return client
 }
@@ -27,7 +27,6 @@ var convertESLine2OutputForm = function (line) {
 }
 
 ESFactStore.prototype.getByDate = function (date, page) {
-  var allResults = []
   var resultsPerPage = 100
   var ESFrom = resultsPerPage * page
 
@@ -36,8 +35,8 @@ ESFactStore.prototype.getByDate = function (date, page) {
       index: config.elasticFactIndex,
       method: 'GET',
       body: {
-	from: ESFrom,
-	size: resultsPerPage,
+        from: ESFrom,
+        size: resultsPerPage,
         query: {
           bool: {
             must: {
@@ -53,9 +52,9 @@ ESFactStore.prototype.getByDate = function (date, page) {
       }
     })
       .then(function (results) {
-	var facts = results.hits.hits
-	resolve(convertFactsToOutputForm(facts))
-    })
+        var facts = results.hits.hits
+        resolve(convertFactsToOutputForm(facts))
+      })
     .catch(console.log)
   })
 }
