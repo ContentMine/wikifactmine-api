@@ -32,8 +32,6 @@ paths:
           required: true
           type: string
           format: date
-          validate:
-            enabled: true
       responses:
         "200":
           description: Success
