@@ -3,9 +3,9 @@ info:
   version: "0.0.1"
   title: WikiFactMine-api
 # during dev, should point to your local machine
-host: localhost:8080
+host: tools.wmflabs.org
 # basePath prefixes all resource paths
-basePath: /api
+basePath: /wikifactmine-api/api
 #
 schemes:
   # tip: remove http to make production-grade
