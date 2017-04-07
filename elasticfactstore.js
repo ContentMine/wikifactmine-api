@@ -2,6 +2,8 @@ var elasticsearch = require('elasticsearch')
 var config = require('./config.js')
 var _ = require('lodash')
 
+var resultsPerPage = 100
+
 var ESFactStore = function () {
 
 }
@@ -27,9 +29,7 @@ var convertESLine2OutputForm = function (line) {
 }
 
 ESFactStore.prototype.getByDate = function (date, page) {
-  var resultsPerPage = 100
   var ESFrom = resultsPerPage * page
-
   return new Promise(function (resolve, reject) {
     getESClient().search({
       index: config.elasticFactIndex,
@@ -55,6 +55,34 @@ ESFactStore.prototype.getByDate = function (date, page) {
         var facts = results.hits.hits
         resolve(convertFactsToOutputForm(facts))
       })
+    .catch(console.log)
+  })
+}
+
+ESFactStore.prototype.getByItem = function (item, page) {
+  var ESFrom = resultsPerPage * page
+  return new Promise(function (resolve, reject) {
+    getESClient().search({
+      index: config.elasticFactIndex,
+      method: 'GET',
+      body: {
+        from: ESFrom,
+        size: resultsPerPage,
+        query: {
+          constant_score: {
+            filter: {
+              term: {
+                'identifiers.wikidata': item
+              }
+            }
+          }
+        }
+      }
+    })
+    .then(function (results) {
+      var facts = results.hits.hits
+      resolve(convertFactsToOutputForm(facts))
+    })
     .catch(console.log)
   })
 }

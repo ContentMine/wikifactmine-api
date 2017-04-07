@@ -18,6 +18,16 @@ router.get('/date/:date', function (req, res) {
   })
 })
 
+router.get('/item/:item', function (req, res) {
+  factStore.getByItem(req.params.item, req.query.page)
+  .then(function (facts) {
+    res.json(facts)
+  })
+    .then(function (err) {
+      res.send(err)
+    })
+})
+
 function errorHandler (err, req, res, next) {
   res.status(err.status)
   res.json({ error: err.message })
