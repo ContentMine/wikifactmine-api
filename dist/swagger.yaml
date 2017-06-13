@@ -67,6 +67,36 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /2item/{item1}/{item2}:
+    x-swagger-router-controller: wikifactmine-api
+    get:
+      description: Returns Facts from Papers where the two specified items cooccur
+      # used as the method name of the controller
+      operationId: item
+      parameters:
+        - name: item1
+          in: path
+          description: The First Wikidata Item facts should be related to
+          required: true
+          type: string
+          pattern: "^Q[0-9]*$"
+        - name: item2
+          in: path
+          description: The Second Wikidata Item facts should be related to
+          required: true
+          type: string
+          pattern: "^Q[0-9]*$"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/FactsResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions

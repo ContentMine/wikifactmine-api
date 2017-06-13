@@ -28,6 +28,16 @@ router.get('/item/:item', function (req, res) {
     })
 })
 
+router.get('/2item/:item1/:item2', function (req, res) {
+  factStore.getBy2Item(req.params.item1, req.params.item2)
+    .then(function (facts) {
+      res.json(facts)
+    })
+    .then(function (err) {
+      res.send(err)
+    })
+})
+
 function errorHandler (err, req, res, next) {
   res.status(err.status)
   res.json({ error: err.message })

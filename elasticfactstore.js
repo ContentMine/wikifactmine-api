@@ -87,4 +87,57 @@ ESFactStore.prototype.getByItem = function (item, page) {
   })
 }
 
+ESFactStore.prototype.getBy2Item = function (item1, item2) {
+  return new Promise(function (resolve, reject) {
+    getESClient().search({
+      index: config.elasticFactIndex,
+      method: 'GET',
+      body: {
+        'query' : {
+          'or': [
+            {
+              'bool' : {
+                'must': {
+                  'term': { 'identifiers.wikidata' : item1}
+                }
+              }
+            },
+            {
+              'bool' : {
+                'must': {
+                  'term': { 'identifiers.wikidata' : item2}
+                }
+              }
+            }
+          ]
+        },
+        'aggs': {
+          'papers': {
+            'terms': {
+              'field': 'cprojectID',
+              'size': 20,
+              'order': { 'fact_count': 'desc'}
+            },
+            'aggs': {
+              'fact_count': {
+                'cardinality': {'field': 'identifiers.wikidata'}
+              },
+              'documents': {
+                'top_hits': {'size': 5}
+              }
+            }
+          }
+        },
+        'size': 0
+      }
+    })
+      .then(function (results) {
+	var buckets = results.aggregations.papers.buckets
+	var facts = _.flatMap(buckets, function (bucket) {return bucket.documents.hits.hits})
+	resolve(convertFactsToOutputForm(facts))
+      })
+      .catch(console.log)
+})
+}
+
 module.exports = ESFactStore
