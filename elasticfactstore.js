@@ -133,7 +133,12 @@ ESFactStore.prototype.getBy2Item = function (item1, item2) {
     })
       .then(function (results) {
 	var buckets = results.aggregations.papers.buckets
-	var facts = _.flatMap(buckets, function (bucket) {return bucket.documents.hits.hits})
+	var facts = _.flatMap(buckets, function (bucket) {
+    if (bucket.fact_count.value === 2) {
+      return bucket.documents.hits.hits
+    }
+    return []
+  })
 	resolve(convertFactsToOutputForm(facts))
       })
       .catch(console.log)
