@@ -44,6 +44,7 @@ function errorHandler (err, req, res, next) {
 }
 
 middleware('dist/swagger.yaml', app, function (err, middleware) {
+  app.use('/wikifactmine-api', app.router)
   if (err) throw err
 
   app.use(middleware.metadata())
