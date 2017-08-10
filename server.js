@@ -44,14 +44,19 @@ function errorHandler (err, req, res, next) {
 }
 
 middleware('dist/swagger.yaml', app, function (err, middleware) {
-  app.use('/wikifactmine-api', app.router)
   if (err) throw err
 
   app.use(middleware.metadata())
   app.use(middleware.parseRequest())
   app.use(middleware.validateRequest())
-
   app.use(bodyParser.json())
+
+  app.get('/wikifactmine-api/', function (req, res) {
+    res.sendFile(path.join(__dirname, '/dist/index.html'))
+  })
+  app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '/dist/index.html'))
+  })
 
   // enable cors
   app.use(function (req, res, next) {
@@ -62,15 +67,8 @@ middleware('dist/swagger.yaml', app, function (err, middleware) {
 
   app.use('/api', router)
   app.use('/wikifactmine-api/api', router)
-  app.get('/wikifactmine-api', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'))
-  })
-  app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'))
-  })
-  app.use(express.static('dist'))
   app.use('/wikifactmine-api/', express.static('dist'))
-
+  app.use('/', express.static('dist'))
   app.use(errorHandler)
 
   app.listen(port)
