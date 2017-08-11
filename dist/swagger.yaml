@@ -6,6 +6,7 @@ info:
 host: tools.wmflabs.org
 # basePath prefixes all resource paths
 basePath: /wikifactmine-api/api
+validatorUrl: null
 #
 schemes:
   # tip: remove http to make production-grade
