@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 var router = express.Router()
 var Factstore = require('./elasticfactstore')
+var suggestionStore = require('./suggestionstore')
 var port = process.env.PORT || 8080
 var bodyParser = require('body-parser')
 var path = require('path')
@@ -38,9 +39,20 @@ router.get('/2item/:item1/:item2', function (req, res) {
     })
 })
 
+router.get('/wddg', function (req, res) {
+  suggestionStore.action(req.query)
+  .then(function (suggestions) {
+    res.json(suggestions)
+  })
+  .catch(function (err) {
+    res.status(500)
+    res.json({ error: err.message })
+  })
+})
+
 function errorHandler (err, req, res, next) {
-  res.status(err.status)
-  res.json({ error: err.message })
+  res.status(500)
+  res.render('error', err)
 }
 
 middleware('dist/swagger.yaml', app, function (err, middleware) {
