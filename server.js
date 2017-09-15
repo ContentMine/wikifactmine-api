@@ -42,7 +42,7 @@ router.get('/2item/:item1/:item2', function (req, res) {
 router.get('/wddg', function (req, res) {
   suggestionStore.action(req.query)
   .then(function (suggestions) {
-    res.json(suggestions)
+    res.jsonp(suggestions)
   })
   .catch(function (err) {
     res.status(500)
