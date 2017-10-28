@@ -97,6 +97,12 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /wddg:
+    x-swagger-router-controller: wikifactmine-api
+    get:
+      description: Returns Facts from Papers where the two specified items cooccur
+      # used as the method name of the controller
+      operationId: wddg
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
