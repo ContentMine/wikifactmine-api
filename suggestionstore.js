@@ -84,7 +84,7 @@ var getTiles = function (resolve, reject, number) {
                   label: 'Is Main Subject',
                   api_action: {
                     action: 'wbcreateclaim',
-                    entity: 'x.PAPERID',
+                    entity: x.PAPERID,
                     property: config.MainSubjectProperty,
                     snaktype: 'value',
                     value: '{"entity-type":"item","numeric-id":"' + x.MSID + '"}'
