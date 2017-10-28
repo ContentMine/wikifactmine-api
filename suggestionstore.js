@@ -87,7 +87,7 @@ var getTiles = function (resolve, reject, number) {
                     entity: x.PAPERID,
                     property: config.MainSubjectProperty,
                     snaktype: 'value',
-                    value: '{"entity-type":"item","numeric-id":"' + x.MSID + '"}'
+                    value: '{"entity-type":"item","numeric-id":"' + x.MSID.slice(1) + '"}'
                   }
                 },
                 { type: 'white', decision: 'skip', label: 'Dunno' },
