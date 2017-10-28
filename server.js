@@ -52,7 +52,7 @@ router.get('/wddg', function (req, res) {
 
 function errorHandler (err, req, res, next) {
   res.status(500)
-  res.send('error', err)
+  res.send(err)
 }
 
 middleware('dist/swagger.yaml', app, function (err, middleware) {
